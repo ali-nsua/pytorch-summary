@@ -35,9 +35,11 @@ def summary_string(model, input_size, batch_size=-1, device=torch.device('cuda:0
                 ]
             else:
                 if type(output) is OrderedDict:
+                    # Only supports one output at the moment
                     for idx in output:
-                        summary[m_key]["output_shape_{}".format(idx)] = list(output[idx].size())
-                        summary[m_key]["output_shape_{}".format(idx)][0] = batch_size
+                        summary[m_key]["output_shape"] = list(output[idx].size())
+                        summary[m_key]["output_shape"][0] = batch_size
+                        break #needs a fix right here to store multiple outputs
                 else:
                     summary[m_key]["output_shape"] = list(output.size())
                     summary[m_key]["output_shape"][0] = batch_size
