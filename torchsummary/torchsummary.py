@@ -34,8 +34,13 @@ def summary_string(model, input_size, batch_size=-1, device=torch.device('cuda:0
                     [-1] + list(o.size())[1:] for o in output
                 ]
             else:
-                summary[m_key]["output_shape"] = list(output.size())
-                summary[m_key]["output_shape"][0] = batch_size
+                if type(output) is OrderedDict:
+                    for idx in output:
+                        summary[m_key]["output_shape_{}".format(idx)] = list(output[idx].size())
+                        summary[m_key]["output_shape_{}".format(idx)][0] = batch_size
+                else:
+                    summary[m_key]["output_shape"] = list(output.size())
+                    summary[m_key]["output_shape"][0] = batch_size
 
             params = 0
             if hasattr(module, "weight") and hasattr(module.weight, "size"):
