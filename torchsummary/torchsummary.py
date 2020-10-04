@@ -39,7 +39,8 @@ def summary_string(model, input_size, batch_size=-1, device=torch.device('cuda:0
                     for idx in output:
                         summary[m_key]["output_shape"] = list(output[idx].size())
                         summary[m_key]["output_shape"][0] = batch_size
-                        break #needs a fix right here to store multiple outputs
+                        # TODO
+                        break
                 else:
                     summary[m_key]["output_shape"] = list(output.size())
                     summary[m_key]["output_shape"][0] = batch_size
